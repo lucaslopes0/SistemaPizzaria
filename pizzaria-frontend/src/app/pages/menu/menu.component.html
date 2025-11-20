@@ -1,0 +1,12 @@
+<h1>Cardápio</h1>
+
+<div *ngFor="let item of menu" class="pizza-card">
+  <h3>{{ item.nome }}</h3>
+  <p>R$ {{ item.preco | number:'1.2-2' }}</p>
+  <button (click)="addToCart(item)">Adicionar</button>
+</div>
+
+<div class="cart-preview" *ngIf="cart.length">
+  <p>{{ cart.length }} item(s) no carrinho</p>
+  <button (click)="goToCart()">Ir para o carrinho</button>
+</div>
