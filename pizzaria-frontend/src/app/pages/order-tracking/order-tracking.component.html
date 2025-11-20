@@ -1,0 +1,39 @@
+<div class="tracking-container">
+  <h1>Rastreamento do Pedido</h1>
+
+  <div *ngIf="error" class="error">
+    {{ error }}
+  </div>
+
+  <div *ngIf="loading">
+    Carregando informações do pedido...
+  </div>
+
+  <ng-container *ngIf="!loading && order">
+    <div class="order-header">
+      <p><strong>Pedido #{{ order.id }}</strong></p>
+      <p>Status atual: <span class="status-badge">{{ order.status }}</span></p>
+    </div>
+
+    <h3>Itens</h3>
+    <ul class="order-items">
+      <li *ngFor="let item of order.itens">
+        <div class="item-line">
+          <span>{{ item.pizza.nome }} (x{{ item.quantidade }})</span>
+          <span>R$ {{ item.total | number: '1.2-2' }}</span>
+        </div>
+      </li>
+    </ul>
+
+    <div class="order-summary">
+      <p>Subtotal: R$ {{ order.subtotal | number: '1.2-2' }}</p>
+      <p>Desconto: R$ {{ order.desconto | number: '1.2-2' }}</p>
+      <p><strong>Total: R$ {{ order.total_final | number: '1.2-2' }}</strong></p>
+    </div>
+
+    <div class="actions">
+      <button (click)="loadOrder()">Atualizar status</button>
+      <button (click)="goToPayment()">Ir para pagamento</button>
+    </div>
+  </ng-container>
+</div>

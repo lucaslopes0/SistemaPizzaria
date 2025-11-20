@@ -1,0 +1,70 @@
+<div class="payment-container">
+  <h1>Pagamento do Pedido</h1>
+
+  <div *ngIf="error" class="error">
+    {{ error }}
+  </div>
+
+  <div *ngIf="loading">
+    Carregando pedido...
+  </div>
+
+  <ng-container *ngIf="!loading && order">
+    <div class="order-info">
+      <p><strong>Pedido #{{ order.id }}</strong></p>
+      <p>Status atual: <span class="status-badge">{{ order.status }}</span></p>
+      <p>
+        Total a pagar:
+        <strong>R$ {{ order.total_final | number: '1.2-2' }}</strong>
+      </p>
+    </div>
+
+    <h3>Forma de pagamento</h3>
+
+    <div class="metodos">
+      <label>
+        <input
+          type="radio"
+          name="metodo"
+          value="PIX"
+          [checked]="metodo === 'PIX'"
+          (change)="selectMetodo('PIX')"
+        />
+        PIX
+      </label>
+
+      <label>
+        <input
+          type="radio"
+          name="metodo"
+          value="CARTAO"
+          [checked]="metodo === 'CARTAO'"
+          (change)="selectMetodo('CARTAO')"
+        />
+        Cartão
+      </label>
+
+      <label>
+        <input
+          type="radio"
+          name="metodo"
+          value="DINHEIRO"
+          [checked]="metodo === 'DINHEIRO'"
+          (change)="selectMetodo('DINHEIRO')"
+        />
+        Dinheiro
+      </label>
+    </div>
+
+    <div class="actions">
+      <button (click)="pagar()" [disabled]="paying">
+        {{ paying ? 'Processando...' : 'Confirmar pagamento' }}
+      </button>
+      <button (click)="goToTracking()">Ver status do pedido</button>
+    </div>
+
+    <div *ngIf="successMessage" class="success">
+      {{ successMessage }}
+    </div>
+  </ng-container>
+</div>
