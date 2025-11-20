@@ -6,10 +6,12 @@
 
 <div *ngFor="let item of cart">
   <strong>{{ item.pizza.nome }}</strong>
-  (x{{ item.quantidade }}) - R$ {{ item.pizza.preco * item.quantidade | number:'1.2-2' }}
+  (x{{ item.quantidade }}) -
+  R$
+  {{ item.pizza.preco * item.quantidade | number: '1.2-2' }}
 </div>
 
 <div *ngIf="cart.length">
-  <p>Subtotal: R$ {{ subtotal | number:'1.2-2' }}</p>
+  <p>Subtotal: R$ {{ subtotal | number: '1.2-2' }}</p>
   <button (click)="finalizarPedido()">Finalizar pedido</button>
 </div>

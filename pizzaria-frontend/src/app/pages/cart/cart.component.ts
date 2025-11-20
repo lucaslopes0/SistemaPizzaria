@@ -1,10 +1,17 @@
 import { Component, OnInit } from '@angular/core';
-import { PizzariaApiService, OrderItemPayload } from '../../core/services/pizzaria-api.service';
-import { Router } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { Router, RouterModule } from '@angular/router';
+import {
+  PizzariaApiService,
+  OrderItemPayload,
+} from '../../core/services/pizzaria-api.service';
 
 @Component({
   selector: 'app-cart',
+  standalone: true,
   templateUrl: './cart.component.html',
+  styleUrls: ['./cart.component.scss'],
+  imports: [CommonModule, RouterModule], // <<< IMPORTANTE
 })
 export class CartComponent implements OnInit {
   cart: any[] = [];
@@ -12,7 +19,7 @@ export class CartComponent implements OnInit {
 
   constructor(
     private api: PizzariaApiService,
-    private router: Router
+    private router: Router,
   ) {}
 
   ngOnInit(): void {
@@ -21,7 +28,10 @@ export class CartComponent implements OnInit {
   }
 
   get subtotal(): number {
-    return this.cart.reduce((acc, item) => acc + item.pizza.preco * item.quantidade, 0);
+    return this.cart.reduce(
+      (acc, item) => acc + item.pizza.preco * item.quantidade,
+      0,
+    );
   }
 
   finalizarPedido(): void {
@@ -30,15 +40,15 @@ export class CartComponent implements OnInit {
       quantidade: item.quantidade,
     }));
 
-    // Exemplo com 10% de desconto (Strategy CupomPercentual)
-    this.api.createOrder(itens, {
-      tipo: 'percentual',
-      percentual: 0.1,
-    }).subscribe(order => {
-      this.orderId = order.id;
-      localStorage.setItem('orderId', String(order.id));
-      // poderia redirecionar direto para pagamento ou tracking
-      this.router.navigate(['/payment']);
-    });
+    this.api
+      .createOrder(itens, {
+        tipo: 'percentual',
+        percentual: 0.1,
+      })
+      .subscribe((order) => {
+        this.orderId = order.id;
+        localStorage.setItem('orderId', String(order.id));
+        this.router.navigate(['/payment']);
+      });
   }
 }

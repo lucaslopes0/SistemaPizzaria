@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { PizzariaApiService, MenuItem } from '../../core/services/pizzaria-api.service';
-import { Router } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { Router, RouterModule } from '@angular/router';
+import {
+  PizzariaApiService,
+  MenuItem,
+} from '../../core/services/pizzaria-api.service';
 
 interface CartItem {
   pizza: MenuItem;
@@ -9,8 +13,10 @@ interface CartItem {
 
 @Component({
   selector: 'app-menu',
+  standalone: true,
   templateUrl: './menu.component.html',
   styleUrls: ['./menu.component.scss'],
+  imports: [CommonModule, RouterModule], // <<< IMPORTANTE
 })
 export class MenuComponent implements OnInit {
   menu: MenuItem[] = [];
@@ -18,7 +24,7 @@ export class MenuComponent implements OnInit {
 
   constructor(
     private api: PizzariaApiService,
-    private router: Router
+    private router: Router,
   ) {}
 
   ngOnInit(): void {
@@ -28,7 +34,7 @@ export class MenuComponent implements OnInit {
   }
 
   addToCart(item: MenuItem): void {
-    const existing = this.cart.find(c => c.pizza.id === item.id);
+    const existing = this.cart.find((c) => c.pizza.id === item.id);
     if (existing) {
       existing.quantidade++;
     } else {
@@ -37,7 +43,6 @@ export class MenuComponent implements OnInit {
   }
 
   goToCart(): void {
-    // em versão simples, você pode guardar o carrinho no localStorage
     localStorage.setItem('cart', JSON.stringify(this.cart));
     this.router.navigate(['/cart']);
   }

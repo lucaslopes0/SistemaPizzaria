@@ -2,7 +2,7 @@
 
 <div *ngFor="let item of menu" class="pizza-card">
   <h3>{{ item.nome }}</h3>
-  <p>R$ {{ item.preco | number:'1.2-2' }}</p>
+  <p>R$ {{ item.preco | number: '1.2-2' }}</p>
   <button (click)="addToCart(item)">Adicionar</button>
 </div>
 
