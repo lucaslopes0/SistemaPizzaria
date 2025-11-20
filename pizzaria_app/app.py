@@ -231,4 +231,4 @@ if __name__ == "__main__":
     config.taxa_entrega = 7.0
     config.percentual_servico = 0.08
 
-    app.run(debug=True)
+    app.run(debug=False)
