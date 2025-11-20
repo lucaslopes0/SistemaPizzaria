@@ -310,5 +310,3 @@ CORS(app)
 Assim, o Angular consegue consumir a API sem problemas de CORS.
 
 ---
-
-Pronto! Basta salvar este conteúdo como **`README.md`** na raiz do projeto (ou dentro do backend/frontend, como preferir).
