@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 
 from config import ConfigService
 from models import Pizza, Order, OrderStatus
@@ -21,8 +22,8 @@ from payments import (
     PaymentHandler,
 )
 
-
 app = Flask(__name__)
+CORS(app)
 
 # "Banco de dados" em memória
 ORDERS: dict[int, Order] = {}
